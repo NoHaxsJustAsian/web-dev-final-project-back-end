@@ -1,0 +1,19 @@
+{
+  "name": "web-dev-final-project-back-end",
+  "version": "1.0.0",
+  "description": "Web Dev Final Project Back End for Twitter Dupe",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoHaxsJustAsian/web-dev-final-project-back-end.git"
+  },
+  "author": "Tunwa Tongtawee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NoHaxsJustAsian/web-dev-final-project-back-end/issues"
+  },
+  "homepage": "https://github.com/NoHaxsJustAsian/web-dev-final-project-back-end#readme"
+}
