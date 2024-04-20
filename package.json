@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/NoHaxsJustAsian/web-dev-final-project-back-end/issues"
   },
-  "homepage": "https://github.com/NoHaxsJustAsian/web-dev-final-project-back-end#readme"
+  "homepage": "https://github.com/NoHaxsJustAsian/web-dev-final-project-back-end#readme",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
 }
