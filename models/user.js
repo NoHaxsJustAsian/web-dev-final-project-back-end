@@ -1,34 +1,70 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
+const { SALT } = require('../config/config')
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
+    id: mongoose.Types.ObjectId,
+    name: {
+        type: String,
+        trim: true,
+        required: 'Please fill a name. It can be your real one or a username.'
+    },
     email: {
         type: String,
-        required: true,
+        trim: true,
+        lowercase: true,
         unique: true,
+        required: 'Email address is required',
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
     password: {
         type: String,
-        required: true,
+        trim: true,
+        required: ['Password is required'],
+        minlength: [8, 'Password should be at least 8 characters long']
     },
-    firstName: {
+    phoneNumber: {
         type: String,
-        required: true,
+        trim: true,
+        required: ['Phone number is required'],
+        match: [/(\+)?(359|0)8[789]\d{1}(|-| )\d{3}(|-| )\d{3}/, 'Please fill a valid phone number']
     },
-    lastName: {
+    gender: {
         type: String,
-        required: true,
+        trim: true,
+        default: 'Not specified'
     },
-  }, {
-    timestamps: true,
-  });
-  
-const User = mongoose.model('User', userSchema);
-  
-module.exports = User;
+    avatar: {
+        type: String,
+        default: 'https://res.cloudinary.com/silenceiv/image/upload/q_auto:eco/v1617358367/defaultAvatar_wnoogh.png'
+    },
+    createdSells: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product'
+        }
+    ],
+    wishedProducts: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product'
+        }
+    ],
+    chatRooms: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'ChatRoom'
+        }
+    ]
+});
 
-//example of signing up a user
-const { user, error } = await supabase.auth.signUp({
-    email: 'user@example.com',
-    password: 'password'
-  });
+userSchema.pre('save', async function (next) {
+    let salt = await bcrypt.genSalt(SALT);
+    let hash = await bcrypt.hash(this.password, salt);
+    this.password = hash;
+    next();
+})
+
+
+
+module.exports = mongoose.model('User', userSchema);
